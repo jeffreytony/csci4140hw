@@ -1,25 +1,17 @@
-#! /usr/bin/env python
-
-# https://pointlessprogramming.wordpress.com/2011/02/13/python-cgi-tutorial-1/
-# https://docs.python.org/2/library/basehttpserver.html
-# https://docs.python.org/2/library/cgihttpserver.html
+#!/usr/bin/env python
 
 import BaseHTTPServer
 import CGIHTTPServer
+import cgitb; cgitb.enable()  ## This line enables CGI error reporting
 import webbrowser
-
 PORT = 8080
-#TODO: check that port is available,
-# and look for a different one if it isn't.
+script_path = "cgi-bin/upload_form.py"
 
-script_path = "cgi-bin/helloworld.cgi"
-
-server_class = BaseHTTPServer.HTTPServer
-handler_class = CGIHTTPServer.CGIHTTPRequestHandler
+server = BaseHTTPServer.HTTPServer
+handler = CGIHTTPServer.CGIHTTPRequestHandler
 server_address = ("", PORT)
 
-httpd = server_class(server_address, handler_class)
-
+httpd = server(server_address, handler)
 url = 'http://localhost:{0}/{1}'.format(PORT, script_path)
 
 webbrowser.open_new_tab(url)
